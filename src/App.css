@@ -5,8 +5,44 @@
   align-items: center;
 }
 
+header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
 .search-form {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: var(--background-body);
+  position: sticky;
+  top: 0;
+  width: 100%;
+  padding: 1rem 0;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.movies {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  list-style: none;
+  padding: 0;
+  width: 100%;
+}
+
+.movie {
+  padding: 0 1rem 1rem 1rem;
+
+  & img {
+    border-radius: 0.4rem;
+  }
 }

@@ -2,13 +2,16 @@ import PropTypes from 'prop-types';
 
 function ListOfMovies({ movies }) {
   return (
-    <ul>
+    <ul className='movies'>
       {movies?.map(movie => (
-        <li key={movie.id}>
+        <li
+          key={movie.id}
+          className='movie'
+        >
           <h3>{movie.title}</h3>
           <p>{movie.releaseYear}</p>
           <img
-            src={movie.poster}
+            src={movie.imageSrc}
             alt={movie.title}
           />
         </li>
@@ -17,7 +20,7 @@ function ListOfMovies({ movies }) {
   );
 }
 ListOfMovies.propTypes = {
-  movies: PropTypes.array.isRequired
+  movies: PropTypes.array
 };
 
 function NoMoviesResult() {
@@ -25,10 +28,10 @@ function NoMoviesResult() {
 }
 
 export function Movies({ movies }) {
-  const hasMovies = movies.length > 0;
+  const hasMovies = movies?.length > 0;
 
   return hasMovies ? <ListOfMovies movies={movies} /> : <NoMoviesResult />;
 }
 Movies.propTypes = {
-  movies: PropTypes.array.isRequired
+  movies: PropTypes.array
 };
