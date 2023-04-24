@@ -7,12 +7,17 @@ import { useSearch } from './hooks/useSearch';
 function App() {
   const [sort, setSort] = useState(false);
   const { search, updateSearch, error } = useSearch();
-  const { movies, moviesLoading, moviesError, getMovies } = useMovies({ search, sort });
+  const { movieResponse, movies, moviesLoading, moviesError, getMovies } = useMovies({
+    search,
+    sort
+  });
 
   function handleSubmit(event) {
     event.preventDefault();
-    getMovies();
-    console.log({ search });
+
+    getMovies({ search });
+
+    event.target.search.blur();
   }
 
   function handleSort() {
@@ -24,8 +29,12 @@ function App() {
   }
 
   useEffect(() => {
-    console.log('new getMovies');
-  }, [getMovies]);
+    if (!search) return;
+
+    const debouncedSearch = setTimeout(() => getMovies({ search }), 800);
+
+    return () => clearTimeout(debouncedSearch);
+  }, [search, getMovies]);
 
   return (
     <div className='page'>
@@ -39,24 +48,32 @@ function App() {
         <input
           style={{
             border: '1px solid transparent',
-            borderColor: error ? 'red' : 'transparent'
+            borderColor: error ? 'red' : 'var(--focus)'
           }}
           value={search}
           onChange={handleChange}
           name='search'
           type='search'
           placeholder='Avengers, Star Wars, The Matrix...'
+          autoComplete='off'
         />
         <input
           type='checkbox'
           onChange={handleSort}
           checked={sort}
         />
-        <button>Buscar</button>
+        <button disabled={search.length === 0}>Buscar</button>
       </form>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <main>
-        {moviesLoading ? <p>Cargando</p> : <Movies movies={movies} />}
+        {moviesLoading ? (
+          <p>Cargando</p>
+        ) : (
+          <Movies
+            movieResponse={movieResponse}
+            movies={movies}
+          />
+        )}
         {moviesError && <p>Error con las pelis</p>}
       </main>
     </div>

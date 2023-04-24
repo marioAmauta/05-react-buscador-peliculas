@@ -9,12 +9,16 @@ export async function searchMovies({ search }) {
 
     const movies = json.Search;
 
-    return movies?.map(movie => ({
+    const movieResponse = json.Response === 'True' ? (json.response = true) : json.Error;
+
+    const mappedMovies = movies?.map(movie => ({
       id: movie.imdbID,
       title: movie.Title,
       releaseYear: movie.Year,
       imageSrc: movie.Poster
     }));
+
+    return [movieResponse, mappedMovies];
   } catch (error) {
     throw new Error(`Error searching movies: ${error}`);
   }

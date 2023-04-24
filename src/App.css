@@ -24,6 +24,10 @@ header {
   padding: 1rem 0;
 }
 
+input[type='search'][placeholder] {
+  text-overflow: ellipsis;
+}
+
 main {
   display: flex;
   justify-content: center;
@@ -41,8 +45,8 @@ main {
 
 .movie {
   padding: 0 1rem 1rem 1rem;
+}
 
-  & img {
-    border-radius: 0.4rem;
-  }
+.movie img {
+  border-radius: 0.4rem;
 }

@@ -23,15 +23,23 @@ ListOfMovies.propTypes = {
   movies: PropTypes.array
 };
 
-function NoMoviesResult() {
-  return <p>No se encontraron películas para esta búsqueda</p>;
+function NoMoviesResult({ message }) {
+  if (!message) return;
+
+  return <p>{message}</p>;
 }
+NoMoviesResult.propTypes = {
+  message: PropTypes.string
+};
 
-export function Movies({ movies }) {
-  const hasMovies = movies?.length > 0;
-
-  return hasMovies ? <ListOfMovies movies={movies} /> : <NoMoviesResult />;
+export function Movies({ movieResponse, movies }) {
+  return movieResponse === true ? (
+    <ListOfMovies movies={movies} />
+  ) : (
+    <NoMoviesResult message={movieResponse} />
+  );
 }
 Movies.propTypes = {
+  movieResponse: PropTypes.any,
   movies: PropTypes.array
 };

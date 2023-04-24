@@ -12,12 +12,7 @@ export function useSearch() {
     }
 
     if (search === '') {
-      setError('No se puede buscar una película vacía');
-      return;
-    }
-
-    if (search.match(/^\d+$/)) {
-      setError('No se puede buscar una película con un numero');
+      setError('No se puede buscar una película sin titulo');
       return;
     }
 
